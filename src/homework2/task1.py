@@ -1,5 +1,3 @@
-# Смещения относительно занятой ячейки: (строка, столбец).
-DIRECTIONS = ((-1, 0), (1, 0), (0, -1), (0, 1))
 
 
 def count_placement_positions(field: list[str]) -> int:
@@ -7,12 +5,15 @@ def count_placement_positions(field: list[str]) -> int:
     n, m = len(field), len(field[0])
     blocked = [[False] * m for _ in range(n)]
 
+    # Смещения относительно занятой ячейки: (строка, столбец).
+    directions = ((-1, 0), (1, 0), (0, -1), (0, 1))
+
     for row, line in enumerate(field):
         for col, cell in enumerate(line):
             if cell != "*":
                 continue
             blocked[row][col] = True
-            for d_row, d_col in DIRECTIONS:
+            for d_row, d_col in directions:
                 r, c = row + d_row, col + d_col
                 if 0 <= r < n and 0 <= c < m:
                     blocked[r][c] = True
