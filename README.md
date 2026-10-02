@@ -1,6 +1,6 @@
 # Курс "Программирование" в ИГУ
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Tests](https://github.com/bulat-tsydendorzhiev/ISU-programming-homeworks/actions/workflows/Tests/badge.svg)](https://github.com/bulat-tsydendorzhiev/ISU-programming-homeworks/actions/workflows/tests.yml)
+[![Tests](https://github.com/bulat-tsydendorzhiev/ISU-programming-homeworks/actions/workflows/tests.yml/badge.svg)](https://github.com/bulat-tsydendorzhiev/ISU-programming-homeworks/actions/workflows/tests.yml)
 
 Этот репозиторий содержит в себе домашние задания на языке Python курса "Программирование" из первого семестра ИГУ.
 

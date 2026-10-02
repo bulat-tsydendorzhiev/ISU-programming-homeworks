@@ -7,6 +7,8 @@ on:
       - 'tests/**'
       - 'pyproject.toml'
       - '.github/workflows/tests.yml'
+      - 'requirements.txt'
+      - 'requirements-dev.txt'
   pull_request: *test-event
 
 permissions:
