@@ -20,4 +20,4 @@ pip install -r requirements.txt -r requirements-dev.txt
 python -m pytest
 ```
 
-Статус последниех тестов — бейдж выше.
+Статус последних тестов в ветке `main` — бейдж выше.
