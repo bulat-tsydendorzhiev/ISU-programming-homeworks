@@ -1,3 +1,5 @@
+
+
 def get_non_unique_numbers(numbers: list[int]) -> list[int]:
     """
     Возвращает список чисел, которые встречаются в списке более одного раза.

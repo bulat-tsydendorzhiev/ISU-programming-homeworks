@@ -1,3 +1,5 @@
+
+
 def get_passenger_count(time_intervals: list[(int, int)], target_time: int) -> int:
     """
     Получает количество пассажиров, находящихся в метро на момент времени target_time.
