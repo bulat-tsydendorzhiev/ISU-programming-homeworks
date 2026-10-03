@@ -1,6 +1,6 @@
 import pytest
 
-from homework2.task2 import calculate_perimeter
+from homework2.main_version.task2 import calculate_perimeter
 
 
 @pytest.mark.parametrize(

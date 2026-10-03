@@ -1,6 +1,6 @@
 import pytest
 
-from homework2.task1 import count_placement_positions
+from homework2.main_version.task1 import count_placement_positions
 
 
 @pytest.mark.parametrize(
