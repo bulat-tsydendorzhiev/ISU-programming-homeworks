@@ -7,7 +7,7 @@ def is_decoded_key_phrase(row: str):
     """Проверяет является ли строка закодированной ключевой фразой"""
     return (len(row) == len(KEY_PHRASE) 
             and len(set(row)) == 27 
-            and all(row[i] == ' ' if KEY_PHRASE[i] == ' ' else row[i] != ' ' for i in range(len(KEY_PHRASE))))
+            and all((row[i] == ' ') == (KEY_PHRASE[i] == ' ') for i in range(len(KEY_PHRASE))))
 
 
 def decode_letter(letter: list[str]) -> list[str]:
