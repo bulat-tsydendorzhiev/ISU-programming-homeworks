@@ -1,5 +1,23 @@
 
 
+def translate_operation(query_operation: str) -> str:
+    """Переводит операцию с запроса в формат операции для файла"""
+    match query_operation:
+        case "read":
+            return "R"
+        case "write":
+            return "W"
+        case "execute":
+            return "X"
+        case _:
+            return "Invalid data"
+
+
+def process_access_queries(files: dict[str, list[str]], queries: list[tuple[str, str]]) -> list[str]:
+    """Обрабатывает список запросов на доступ к файлам и возвращает статус для каждого."""
+    return ["OK" if translate_operation(operation) in files[file_name] else "Access denied" for operation, file_name in queries] 
+
+
 def get_number(input_message: str, negative_value_message: str, value_error_message: str) -> int:
     """Получает число от пользователя."""
     while True:
@@ -69,6 +87,10 @@ def main() -> None:
 
     print(files)
     print(queries)
+
+    responses = process_access_queries(files, queries)
+    for response in responses:
+        print(response)
 
 
 if __name__ == "__main__":
