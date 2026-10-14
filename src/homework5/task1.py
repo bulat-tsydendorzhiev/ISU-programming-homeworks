@@ -55,23 +55,26 @@ def group_roles_text(roles: list[str], text_lines: list[str]) -> dict[str, list[
 
 
 def main() -> None:
-    if len(sys.argv) != 2:
-        print("Некорректное число аргументов. Введите флаг -h или --help для больших деталей.")
+    if sys.argv[1] in ("-h", "--help"):
+        message = "Чтобы запустить программу введите python -m \"путь к этому файлу модуля\" <путь к текстовому файлу>."
+        print(message)
         return
 
-    if sys.argv[0] in ("-h", "--help"):
-        # TODO написать сообщение для пользователя.
-        print()
+    if len(sys.argv) != 2:
+        print("Некорректное число аргументов. Введите флаг -h или --help для больших деталей.")
         return
 
     path = sys.argv[1]
 
     if not os.path.isfile(path):
-        print("Такого файла не существует.")
+        print("Такого файла не существует. Введите флаг -h или --help для больших деталей.")
+        return
+
+    if not path.endswith(".txt"):
+        print("Программа работает только с текстовыми файлами. Введите флаг -h или --help для больших деталей.")
         return
 
     roles, text_lines = get_roles_and_text_lines(path)
-    print(roles, text_lines)
     roles_text = group_roles_text(roles, text_lines)
 
     for role in roles_text:
