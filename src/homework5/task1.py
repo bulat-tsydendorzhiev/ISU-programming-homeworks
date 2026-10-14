@@ -11,6 +11,8 @@ def get_roles_and_text_lines(path: str) -> tuple[list[str], list[str]]:
     with open(path, "r", encoding="utf-8") as file:
         for line in file:
             clean_line = line.strip()
+            if not clean_line:
+                continue
 
             if clean_line == "roles:":
                 current_section = "roles"
@@ -22,7 +24,7 @@ def get_roles_and_text_lines(path: str) -> tuple[list[str], list[str]]:
             if current_section == "roles":
                 roles.append(clean_line)
             elif current_section == "lines":
-                text_lines.append(clean_line)
+                text_lines.append(line)
 
     return (roles, text_lines)
 
@@ -69,7 +71,7 @@ def main() -> None:
         return
 
     roles, text_lines = get_roles_and_text_lines(path)
-
+    print(roles, text_lines)
     roles_text = group_roles_text(roles, text_lines)
 
     for role in roles_text:
