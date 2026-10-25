@@ -11,47 +11,41 @@ def get_roles_and_text_lines(path: str) -> tuple[list[str], list[str]]:
     with open(path, "r", encoding="utf-8") as file:
         for line in file:
             clean_line = line.strip()
-            if not clean_line:
-                continue
 
-            if clean_line == "roles:":
-                current_section = "roles"
-                continue
-            elif clean_line == "textLines:":
-                current_section = "lines"
+            if clean_line == "roles:" or clean_line == "textLines:":
+                current_section = clean_line[:-1]
                 continue
 
             if current_section == "roles":
                 roles.append(clean_line)
-            elif current_section == "lines":
-                text_lines.append(line)
+            else:
+                text_lines.append(clean_line)
 
     return (roles, text_lines)
 
 
 def group_roles_text(roles: list[str], text_lines: list[str]) -> dict[str, list[tuple[int, str]]]:
-    """Группирует реплики по ролям, пронумеровывает и возвращает готовый текст."""
-    roles_text = {role: [] for role in roles}
+    """Группирует реплики по ролям, нумеруя реплики по их номеру строки."""
+    roles_text: dict[str, list[tuple[int, list[str]]]] = {role: [] for role in roles}
     current_role = None
 
     for i, text_line in enumerate(text_lines):
-        if not text_line:
+        separator = text_line.find(":")
+        role = text_line[:separator] if separator > 0 else None
+
+        if role in roles_text:
+            current_role = role
+            text = text_line[separator + 1:]
+            roles_text[role].append((i + 1, [text.strip()] if text else []))
             continue
 
-        separator = text_line.find(":")
-        if separator > 0:
-            role = text_line[:separator]
-            if role in roles_text:
-                current_role = role
-                text = text_line[separator + 1:]
-                if text:
-                    roles_text[role].append((i + 1, text.strip()))
-                continue
+        if current_role is not None and roles_text[current_role]:
+            roles_text[current_role][-1][1].append(text_line)
 
-        if current_role is not None:
-            roles_text[current_role].append((i + 1, text_line.strip()))
-
-    return roles_text
+    return {
+        role: [(line_number, "\n".join(parts)) for line_number, parts in replicas if parts]
+        for role, replicas in roles_text.items()
+    }
 
 
 def main() -> None:
@@ -81,6 +75,7 @@ def main() -> None:
         print(f"{role}:")
         for line_number, text in roles_text[role]:
             print(f"{line_number}) {text}")
+        print()
 
 
 if __name__ == "__main__":
