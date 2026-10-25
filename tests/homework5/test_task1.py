@@ -1,6 +1,11 @@
 import pytest
 
-from homework5.task1 import get_roles_and_text_lines, group_roles_text
+from homework5.task1 import (
+    get_default_output_path,
+    get_roles_and_text_lines,
+    group_roles_text,
+    write_roles_text,
+)
 
 
 def write_play(tmp_path, content: str) -> str:
@@ -32,15 +37,21 @@ def test_reads_roles_and_lines_preserving_order(tmp_path):
 
     assert roles == ["Городничий", "Аммос Федорович", "Артемий Филиппович", "Лука Лукич"]
     assert len(text_lines) == 7
-    assert text_lines[0] == "Городничий: Сообщаю вам неприятное известие: к нам едет ревизор.\n"
-    assert text_lines[-1] == "Лука Лукич: Господи боже! Еще и с секретным предписаньем!\n"
+    assert text_lines[0] == "Городничий: Сообщаю вам неприятное известие: к нам едет ревизор."
+    assert text_lines[-1] == "Лука Лукич: Господи боже! Еще и с секретным предписаньем!"
 
 
 @pytest.mark.parametrize(
     "content, expected_roles, expected_lines",
     [
         pytest.param("roles:\nА\nБ\n", ["А", "Б"], [], id="without_text_lines"),
-        pytest.param("textLines:\nА: раз\n", [], ["А: раз\n"], id="without_roles"),
+        pytest.param("textLines:\nА: раз\n", [], ["А: раз"], id="without_roles"),
+        pytest.param(
+            "textLines:\nА: раз\n   продолжение\n",
+            [],
+            ["А: раз", "продолжение"],
+            id="strips_indentation",
+        ),
         pytest.param("", [], [], id="empty_file"),
     ],
 )
@@ -49,14 +60,6 @@ def test_section_boundaries(tmp_path, content, expected_roles, expected_lines):
         expected_roles,
         expected_lines,
     )
-
-
-def test_role_without_text_should_be_grouped():
-    assert group_roles_text(["А", "Б", "В"], ["А: раз", "В: три"]) == {
-        "А": [(1, "раз")],
-        "Б": [],
-        "В": [(2, "три")],
-    }
 
 
 def test_replicas_order_follows_roles_list():
@@ -89,23 +92,34 @@ def test_prefixed_role_names_are_distinguished():
     }
 
 
-def test_indented_lines_continue_the_current_replica():
+def test_multiline_replica_is_grouped_as_one():
     roles = ["Лука", "Лука Лукич"]
     text_lines = [
         "Лука: привет",
-        "  текст: продолжение",
-        "  Лука Лукич: вложенная роль",
+        "текст: продолжение",
+        "и Лука Лукич: вложенная роль",
         "Лука Лукич: пока",
     ]
 
     assert group_roles_text(roles, text_lines) == {
-        "Лука": [(1, "привет"), (2, "текст: продолжение"), (3, "Лука Лукич: вложенная роль")],
+        "Лука": [(1, "привет\nтекст: продолжение\nи Лука Лукич: вложенная роль")],
         "Лука Лукич": [(4, "пока")],
     }
 
 
-def test_empty_text_lines_groups():
-    assert group_roles_text(["А", "Б"], []) == {"А": [], "Б": []}
+def test_role_line_without_text_is_filled_by_following_lines():
+    roles = ["А", "Б"]
+    text_lines = [
+        "А:",
+        "первая строка",
+        "вторая строка",
+        "Б: ответ",
+    ]
+
+    assert group_roles_text(roles, text_lines) == {
+        "А": [(2, "первая строка\nвторая строка")],
+        "Б": [(4, "ответ")],
+    }
 
 
 def test_grouping_does_not_modify_inputs():
@@ -116,3 +130,30 @@ def test_grouping_does_not_modify_inputs():
 
     assert roles == ["А", "Б"]
     assert text_lines == ["А: раз", "  два", "Б: три"]
+
+
+def test_default_output_path_is_next_to_input(tmp_path):
+    input_path = tmp_path / "roles.txt"
+
+    assert get_default_output_path(str(input_path)) == str(tmp_path / "roles.grouped.txt")
+
+
+def test_write_roles_text_aligns_multiline_replicas(tmp_path):
+    roles_text = {
+        "а": [(2, "первая реплика\nвторая"), (10, "третья\nчетвёртая")],
+        "б": [(12, "пятая")],
+    }
+    output_path = tmp_path / "result.txt"
+
+    write_roles_text(str(output_path), roles_text)
+
+    assert output_path.read_text(encoding="utf-8") == (
+        "а:\n"
+        "2) первая реплика\n"
+        "   вторая\n"
+        "10) третья\n"
+        "    четвёртая\n"
+        "\n"
+        "б:\n"
+        "12) пятая\n"
+    )
