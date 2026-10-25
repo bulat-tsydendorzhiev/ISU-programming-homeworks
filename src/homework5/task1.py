@@ -12,6 +12,10 @@ def get_roles_and_text_lines(path: str) -> tuple[list[str], list[str]]:
         for line in file:
             clean_line = line.strip()
 
+            # Если в пользовательском файле была пустая строка для удобства.
+            if not clean_line:
+                continue
+
             if clean_line == "roles:" or clean_line == "textLines:":
                 current_section = clean_line[:-1]
                 continue
@@ -35,8 +39,8 @@ def group_roles_text(roles: list[str], text_lines: list[str]) -> dict[str, list[
 
         if role in roles_text:
             current_role = role
-            text = text_line[separator + 1:]
-            roles_text[role].append((i + 1, [text.strip()] if text else []))
+            text = text_line[separator + 1:].strip()
+            roles_text[role].append((i + 1 if text else i + 2, [text] if text else []))
             continue
 
         if current_role is not None and roles_text[current_role]:
