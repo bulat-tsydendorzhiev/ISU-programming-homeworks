@@ -48,34 +48,69 @@ def group_roles_text(roles: list[str], text_lines: list[str]) -> dict[str, list[
     }
 
 
+def get_default_output_path(input_path: str) -> str:
+    """Возвращает путь выходного файла рядом с входным."""
+    root, extension = os.path.splitext(input_path)
+    return f"{root}.grouped{extension}"
+
+
+def write_roles_text(path: str, roles_text: dict[str, list[tuple[int, str]]]) -> None:
+    """Записывает сгруппированные реплики в файл, выравнивая продолжения."""
+    groups = []
+
+    for role, replicas in roles_text.items():
+        group = [f"{role}:"]
+
+        for line_number, text in replicas:
+            prefix = f"{line_number}) "
+            text_lines = text.split("\n")
+            group.append(prefix + text_lines[0])
+            group.extend(" " * len(prefix) + line for line in text_lines[1:])
+
+        groups.append("\n".join(group))
+
+    result = "\n\n".join(groups)
+
+    with open(path, "w", encoding="utf-8", newline="\n") as file:
+        file.write(result)
+        if result:
+            file.write("\n")
+
+
 def main() -> None:
-    if sys.argv[1] in ("-h", "--help"):
-        message = "Чтобы запустить программу введите python -m \"путь к этому файлу модуля\" <путь к текстовому файлу>."
+    if len(sys.argv) > 1 and sys.argv[1] in ("-h", "--help"):
+        message = (
+            "Чтобы запустить программу введите python -m \"путь к этому файлу модуля\" "
+            "<путь к текстовому файлу> [путь к выходному файлу]."
+        )
         print(message)
         return
 
-    if len(sys.argv) != 2:
+    if len(sys.argv) not in (2, 3):
         print("Некорректное число аргументов. Введите флаг -h или --help для больших деталей.")
         return
 
-    path = sys.argv[1]
+    input_path = sys.argv[1]
+    output_path = sys.argv[2] if len(sys.argv) == 3 else get_default_output_path(input_path)
 
-    if not os.path.isfile(path):
+    if not os.path.isfile(input_path):
         print("Такого файла не существует. Введите флаг -h или --help для больших деталей.")
         return
 
-    if not path.endswith(".txt"):
+    if not input_path.endswith(".txt"):
         print("Программа работает только с текстовыми файлами. Введите флаг -h или --help для больших деталей.")
         return
 
-    roles, text_lines = get_roles_and_text_lines(path)
+    roles, text_lines = get_roles_and_text_lines(input_path)
     roles_text = group_roles_text(roles, text_lines)
 
-    for role in roles_text:
-        print(f"{role}:")
-        for line_number, text in roles_text[role]:
-            print(f"{line_number}) {text}")
-        print()
+    try:
+        write_roles_text(output_path, roles_text)
+    except OSError as error:
+        print(f"Не удалось записать файл: {error}")
+        return
+
+    print(f"Результат записан в файл: {output_path}")
 
 
 if __name__ == "__main__":
