@@ -18,7 +18,7 @@ class User:
         self.set_name(new_name)
 
     @property
-    def age(self) -> str:
+    def age(self) -> int:
         return self.get_age()
 
     @age.setter
