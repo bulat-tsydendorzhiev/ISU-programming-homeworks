@@ -48,4 +48,4 @@ class Word:
         return self.__word >= other.__word
 
     def __is_valid_word(self, word: str) -> bool:
-        return isinstance(word, str) and str.isalpha(word) and str.isascii(word)
+        return str.isalpha(word) and str.isascii(word)

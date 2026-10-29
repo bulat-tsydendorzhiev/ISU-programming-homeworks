@@ -42,7 +42,7 @@ class User:
         self._age = new_age
 
     def __is_valid_name(name: str) -> bool:
-        return isinstance(name, str) and str.isalpha(name)
+        return str.isalpha(name)
     
     def __is_valid_age(age: int) -> bool:
-        return isinstance(age, int) and 0 <= age <= 110
+        return 0 <= age <= 110
