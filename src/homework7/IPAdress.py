@@ -19,7 +19,7 @@ class IPAdress:
 
     def __is_valid_ipadress(self, ipadress: str | list[int] | tuple[int]) -> bool:
         if isinstance(ipadress, str):
-            ipadress_pattern = r'^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$'
+            ipadress_pattern = r'^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\Z'
             return bool(re.match(ipadress_pattern, ipadress))
 
         return len(ipadress) == 4 and all(0 <= int(num) < 256 for num in ipadress)

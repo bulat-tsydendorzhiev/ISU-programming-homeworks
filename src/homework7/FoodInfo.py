@@ -1,6 +1,6 @@
 class FoodInfo:
     def __init__(self, proteins: int, fats: int, carbohydrates: int):
-        if not self.__is_valid_macronutrients_amount(proteins):
+        if not self.__is_valid_macronutrients_amount(proteins, fats, carbohydrates):
             raise ValueError("Некорректные граммовки макронутриентов.")
         self.__proteins = proteins
         self.__fats = fats
@@ -13,18 +13,18 @@ class FoodInfo:
         if not isinstance(other, FoodInfo):
             return NotImplemented
         return FoodInfo(
-            self.proteins + other.proteins,
-            self.fats + other.fats,
-            self.carbohydrates + other.carbohydrates
+            self.__proteins + other.__proteins,
+            self.__fats + other.__fats,
+            self.__carbohydrates + other.__carbohydrates
         )
 
     def __mul__(self, other):
         if not isinstance(other, (int, float)):
             return NotImplemented
         return FoodInfo(
-            self.proteins * other,
-            self.fats * other,
-            self.carbohydrates * other
+            self.__proteins * other,
+            self.__fats * other,
+            self.__carbohydrates * other
         )
 
     def __rmul__(self, other):
@@ -36,18 +36,18 @@ class FoodInfo:
         if not isinstance(other, (int, float)):
             return NotImplemented
         return FoodInfo(
-            self.proteins / other,
-            self.fats / other,
-            self.carbohydrates / other
+            self.__proteins / other,
+            self.__fats / other,
+            self.__carbohydrates / other
         )
 
     def __floordiv__(self, other):
         if not isinstance(other, (int, float)):
             return NotImplemented
         return FoodInfo(
-            self.proteins // other,
-            self.fats // other,
-            self.carbohydrates // other
+            self.__proteins // other,
+            self.__fats // other,
+            self.__carbohydrates // other
         )
 
     def __is_valid_macronutrients_amount(self, proteins: int, fats: int, carbohydrates: int) -> bool:
