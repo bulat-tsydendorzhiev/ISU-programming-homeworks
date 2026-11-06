@@ -8,18 +8,18 @@ from homework6.vector import Vector
 class TestInit:
     def test_stores_coordinates(self):
         vector = Vector(3, 4)
-        assert vector.x == 3
-        assert vector.y == 4
+        assert vector.__x == 3
+        assert vector.__y == 4
 
     def test_stores_negative_coordinates(self):
         vector = Vector(-1, -2)
-        assert vector.x == -1
-        assert vector.y == -2
+        assert vector.__x == -1
+        assert vector.__y == -2
 
     def test_zero_vector(self):
         vector = Vector(0, 0)
-        assert vector.x == 0
-        assert vector.y == 0
+        assert vector.__x == 0
+        assert vector.__y == 0
 
 
 class TestLength:
@@ -40,11 +40,11 @@ class TestLength:
 class TestAdd:
     def test_adds_corresponding_coordinates(self):
         result = Vector(1, 2) + Vector(3, 4)
-        assert (result.x, result.y) == (4, 6)
+        assert (result.__x, result.__y) == (4, 6)
 
     def test_adds_negative_coordinates(self):
         result = Vector(-1, -2) + Vector(1, 2)
-        assert (result.x, result.y) == (0, 0)
+        assert (result.__x, result.__y) == (0, 0)
 
     def test_addition_with_non_vector_raises_type_error(self):
         with pytest.raises(TypeError):
@@ -58,11 +58,11 @@ class TestAdd:
 class TestSub:
     def test_subtracts_corresponding_coordinates(self):
         result = Vector(5, 6) - Vector(3, 4)
-        assert (result.x, result.y) == (2, 2)
+        assert (result.__x, result.__y) == (2, 2)
 
     def test_subtracts_to_negative_coordinates(self):
         result = Vector(1, 1) - Vector(3, 4)
-        assert (result.x, result.y) == (-2, -3)
+        assert (result.__x, result.__y) == (-2, -3)
 
     def test_subtraction_with_non_vector_raises_type_error(self):
         with pytest.raises(TypeError):
