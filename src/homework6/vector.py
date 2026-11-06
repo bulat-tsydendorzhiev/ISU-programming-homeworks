@@ -32,6 +32,10 @@ class Vector:
             return NotImplemented
         return Vector(self.x - other.x, self.y - other.y)
 
+    def __str__(self):
+        """Возвращает представление класса вектора в виде строки."""
+        return f"({self.x}, {self.y})"
+
     def length(self):
         """Возвращает длину вектора."""
         return math.hypot(self.x, self.y)
