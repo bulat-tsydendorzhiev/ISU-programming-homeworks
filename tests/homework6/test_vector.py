@@ -22,6 +22,28 @@ class TestInit:
         assert vector.y == 0
 
 
+class TestPrint:
+    def test_positive_coordinates(self):
+        vector = Vector(3, 4)
+        assert str(vector) == "(3, 4)"
+
+    def test_negative_coordinates(self):
+        vector = Vector(-3, -4)
+        assert str(vector) == "(-3, -4)"
+
+    def test_positive_and_negative_coordinates(self):
+        vector = Vector(-3, 4)
+        assert str(vector) == "(-3, 4)"
+
+    def test_zero_point(self):
+        vector = Vector(0, 0)
+        assert str(vector) == "(0, 0)"
+
+    def test_float_coordinates(self):
+        vector = Vector(3.5, -4.5)
+        assert str(vector) == "(3.5, -4.5)"
+
+
 class TestLength:
     def test_general_case(self):
         assert Vector(3, 4).length() == pytest.approx(5)
