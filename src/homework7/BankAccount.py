@@ -19,4 +19,4 @@ class BankAccount:
             return NotImplemented        
 
         self.withdraw(amount)
-        account.__balance += amount
+        account.deposit(amount)
