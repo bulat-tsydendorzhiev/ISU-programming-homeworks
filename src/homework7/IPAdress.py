@@ -17,7 +17,8 @@ class IPAdress:
     def __str__(self):
         return self.__ipadress
 
-    def __is_valid_ipadress(self, ipadress: str | list[int] | tuple[int]) -> bool:
+    @staticmethod
+    def __is_valid_ipadress(ipadress: str | list[int] | tuple[int]) -> bool:
         if isinstance(ipadress, str):
             ipadress_pattern = r'^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\Z'
             return bool(re.match(ipadress_pattern, ipadress))

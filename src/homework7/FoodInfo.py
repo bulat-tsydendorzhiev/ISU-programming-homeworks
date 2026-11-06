@@ -50,6 +50,7 @@ class FoodInfo:
             self.__carbohydrates // other
         )
 
-    def __is_valid_macronutrients_amount(self, proteins: int, fats: int, carbohydrates: int) -> bool:
+    @staticmethod
+    def __is_valid_macronutrients_amount(proteins: int, fats: int, carbohydrates: int) -> bool:
         return proteins >= 0 and fats >= 0 and carbohydrates >= 0
     

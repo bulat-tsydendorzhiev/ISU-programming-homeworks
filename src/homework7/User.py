@@ -14,7 +14,7 @@ class User:
         return self.get_name()
 
     @name.setter
-    def name(self, new_name: str):
+    def name(self, new_name: str) -> None:
         self.set_name(new_name)
 
     @property
@@ -22,7 +22,7 @@ class User:
         return self.get_age()
 
     @age.setter
-    def age(self, new_age: int):
+    def age(self, new_age: int) -> None:
         self.set_age(new_age)
 
     def get_name(self) -> str:

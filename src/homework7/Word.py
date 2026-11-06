@@ -47,5 +47,6 @@ class Word:
 
         return self.__word >= other.__word
 
-    def __is_valid_word(self, word: str) -> bool:
+    @staticmethod
+    def __is_valid_word(word: str) -> bool:
         return str.isalpha(word) and str.isascii(word)
