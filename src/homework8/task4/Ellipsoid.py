@@ -4,7 +4,7 @@ from math import pi
 from homework8.task4.Shape3D import Shape3D
 
 class Ellipsoid(Shape3D):
-    def __init__(self, a, b, c):
+    def __init__(self, a: float, b: float, c: float):
         self.__a = a
         self.__b = b
         self.__c = c
