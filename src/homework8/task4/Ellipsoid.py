@@ -9,10 +9,10 @@ class Ellipsoid(Shape3D):
         self.__b = b
         self.__c = c
 
-    def get_volume(self) -> float:
-        return (4 / 3) * pi * self.a * self.b * self.c
-
     def get_surface_area(self) -> float:
         p = 1.6075
-        numerator = (self.a**p * self.b**p) + (self.a**p * self.c**p) + (self.b**p * self.c**p)
+        numerator = (self.__a**p * self.__b**p) + (self.__a**p * self.__c**p) + (self.__b**p * self.__c**p)
         return 4 * pi * (numerator / 3) ** (1 / p)
+
+    def get_volume(self) -> float:
+        return (4 / 3) * pi * self.__a * self.__b * self.__c
