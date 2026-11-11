@@ -8,4 +8,3 @@ class Shape3D(ABC):
     @abstractmethod
     def get_volume(self) -> float:
         pass
-
