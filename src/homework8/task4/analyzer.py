@@ -1,4 +1,4 @@
-from src.homework8.task4.Shape3D import Shape3D
+from homework8.task4.Shape3D import Shape3D
 
 def find_dominant_shapes(*shapes: Shape3D) -> list[Shape3D]:
     total_volume = sum(shape.get_volume() for shape in shapes)
