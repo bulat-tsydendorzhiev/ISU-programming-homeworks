@@ -10,6 +10,7 @@ class Counter:
         self._value += step
 
     def dec(self, step=1) -> None:
-        if self._value == 0:
+        if self._value < step:
+            self._value = 0
             return
         self._value -= step
