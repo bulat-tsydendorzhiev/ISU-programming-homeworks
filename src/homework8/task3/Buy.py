@@ -1,4 +1,4 @@
-from src.homework8.task3.Product import Product
+from homework8.task3.Product import Product
 
 class Buy(Product):
     def __init__(self, name: str, price: float, weight: float, quantity: int):

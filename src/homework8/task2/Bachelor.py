@@ -8,10 +8,10 @@ class Bachelor:
         self._average_mark = average_mark
 
     def get_scholarship(self):
-        if self._average_mark > 3:
-            return 5000
-        elif math.isclose(self._average_mark, 5):
+        if math.isclose(self._average_mark, 5):
             return 10000
+        elif self._average_mark > 3:
+            return 5000
         else:
             return 0
     
