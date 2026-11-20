@@ -18,3 +18,6 @@ class TestMother:
     def test_mother_be_kind(self, mother_default):
         mother_default.be_kind()
         assert mother_default.mood == "kind"
+
+    def test_mother_str_should_work_correctly(self, mother_default):
+        assert str(mother_default) == "Mother is in a neutral mood"

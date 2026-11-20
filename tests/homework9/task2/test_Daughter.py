@@ -25,3 +25,6 @@ class TestDaughter:
     def test_daughter_mood_changes(self, daughter_default, method_name, expected_mood):
         getattr(daughter_default, method_name)()
         assert daughter_default.mood == expected_mood
+
+    def test_daughter_str_should_work_correctly(self, daughter_default):
+        assert str(daughter_default) == "Daughter is in a neutral mood"

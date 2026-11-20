@@ -18,3 +18,6 @@ class TestFather:
     def test_father_be_strict(self, father_default):
         father_default.be_strict()
         assert father_default.mood == "strict"
+
+    def test_father_str_should_work_correctly(self, father_default):
+        assert str(father_default) == "Father is in a neutral mood"
