@@ -7,6 +7,18 @@ class BaseDate(ABC):
         self._month = month
         self._day = day
 
+    @property
+    def year(self) -> str:
+        return self._year
+
+    @property
+    def month(self) -> str:
+        return self._month
+
+    @property
+    def day(self) -> str:
+        return self._day
+
     @abstractmethod
     def format(self) -> str:
         """Возвращает дату в специфичном для страны формате."""
