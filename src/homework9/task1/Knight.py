@@ -10,3 +10,6 @@ class Knight(ChessPiece):
         dy = abs(self.vertical - target_vertical)
 
         return (dx == 1 and dy == 2) or (dx == 2 and dy == 1)
+
+    def __str__(self):
+        return f"Knight ({self.horizontal}-{self.vertical})"

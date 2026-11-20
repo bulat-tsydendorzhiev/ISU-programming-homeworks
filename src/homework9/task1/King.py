@@ -13,3 +13,6 @@ class King(ChessPiece):
             return False
 
         return dx <= 1 and dy <= 1
+
+    def __str__(self):
+        return f"King ({self.horizontal}-{self.vertical})"
