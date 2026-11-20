@@ -36,3 +36,6 @@ class TestKing:
     def test_king_attributes(self, king_e1):
         assert king_e1.horizontal == "e"
         assert king_e1.vertical == 1
+
+    def test_king_str_should_work_correctly(self, king_e1):
+        assert str(king_e1) == "King (e-1)"

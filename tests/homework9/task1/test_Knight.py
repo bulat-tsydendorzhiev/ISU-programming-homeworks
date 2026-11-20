@@ -35,3 +35,6 @@ class TestKnight:
     def test_knight_attributes(self, knight_b1):
         assert knight_b1.horizontal == "b"
         assert knight_b1.vertical == 1
+
+    def test_king_str_should_work_correctly(self, knight_b1):
+        assert str(knight_b1) == "Knight (b-1)"
