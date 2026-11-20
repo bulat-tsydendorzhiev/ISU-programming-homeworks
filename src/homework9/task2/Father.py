@@ -11,3 +11,6 @@ class Father:
 
     def be_strict(self):
         self._mood = "strict"
+
+    def __str__(self):
+        return f"Father is in a {self.mood} mood"

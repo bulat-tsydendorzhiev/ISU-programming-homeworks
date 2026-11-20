@@ -11,3 +11,6 @@ class Mother:
 
     def be_kind(self):
         self._mood = "kind"
+
+    def __str__(self):
+        return f"Mother is in a {self.mood} mood"
