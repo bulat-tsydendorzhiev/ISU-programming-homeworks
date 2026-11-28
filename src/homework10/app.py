@@ -5,10 +5,15 @@ from datetime import datetime
 
 
 def create_users_json(users: list) -> str:
+    """Принимает список пользователей и возвращает валидную JSON-строку."""
     return json.dumps(users, ensure_ascii=False, indent=4)
 
 
 def parse_users_json(json_string: str) -> list:
+    """Принимает JSON-строку, валидирует её и возвращает список пользователей.
+    
+    Бросает ValueError, если JSON некорректен.
+    """
     try:
         data = json.loads(json_string)
         if not isinstance(data, list):
@@ -20,6 +25,7 @@ def parse_users_json(json_string: str) -> list:
 
 
 def collect_users_from_console():
+    """Интерактивный сбор данных из консоли (UI-слой)."""
     print("--- Режим генерации данных о пользователях ---")
     print("--- Введите пустую строку при вводе логина пользователя для выхода из программы ---")
     users = []
@@ -54,6 +60,7 @@ def collect_users_from_console():
 
 
 def format_users_for_display(users: list) -> str:
+    """Превращает список пользователей в красивую строку для вывода на экран."""
     if not users:
         return "Список пользователей пуст."
 
@@ -70,6 +77,7 @@ def format_users_for_display(users: list) -> str:
 
 
 def handle_generate(filename: str):
+    """Контроллер команды generate."""
     users = collect_users_from_console()
     if not users:
         print("Данные не были введены. Файл не создан.")
@@ -86,6 +94,7 @@ def handle_generate(filename: str):
 
 
 def handle_parse(filename: str):
+    """Контроллер команды parse."""
     if not os.path.exists(filename):
         print(f"Ошибка: Файл '{filename}' не найден.")
         return
